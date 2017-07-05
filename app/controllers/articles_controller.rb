@@ -1,12 +1,18 @@
 class ArticlesController < ApplicationController
   include ArticlesHelper
 
+  def find_article
+    @article = Article.find(params[:id])
+  end
+
   def index
     @articles = Article.all
   end
 
   def show
     find_article
+    @comment = Comment.new
+    @comment.article_id = @article.id
   end
 
   def new
@@ -33,10 +39,6 @@ class ArticlesController < ApplicationController
     flash.notice = "Article '#{@article.title}' updated!"
 
     redirect_to article_path(@article)
-  end
-
-  def find_article
-    @article = Article.find(params[:id])
   end
 
 
